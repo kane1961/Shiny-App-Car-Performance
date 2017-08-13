@@ -1,0 +1,20 @@
+#' Define UI for application that draws a plot of one car parameter and presents its performance (mpg and hp).
+#' A linear fit is done considering the parameters.
+
+ui <- fluidPage(pageWithSidebar(
+  headerPanel('Cars Performance'),
+  sidebarPanel(
+    selectInput('ycol', 'Car performance', names(mtcars[c(1,4)])),
+    selectInput('xcol', 'Car parameters I', names(mtcars[c(2,3,5:11)]),
+                selected=names(mtcars)[[3]]),
+    
+    selectInput('par2','Car parameters II',names(mtcars[c(2,9:11)]),
+    )
+  ),
+  
+  
+  mainPanel(
+    plotOutput('plot1')
+  )
+)
+)
