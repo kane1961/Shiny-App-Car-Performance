@@ -1,0 +1,40 @@
+library(shiny)
+
+
+#' The data was extracted from the 1974 Motor Trend US magazine, 
+#' and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles
+#' (1973-74 models).
+#' 
+#' Source Henderson and Velleman (1981), Building multiple regression models interactively. Biometrics, 37, 391-411.
+#'  
+
+#' Define UI for application that draws a plot of one car parameter and presents its performance (mpg and hp).
+#' A linear fit is done considering the parameters.
+
+ui <- fluidPage(pageWithSidebar(
+  headerPanel('Cars Performance'),
+  
+  sidebarPanel(
+    h2("Visualize the car performance (mpg and hp)"),
+    h4("Please select the parameters I to define the x in the plot and parameter II to display the points label."),
+    h4("mpg:	 Miles/(US) gallon__________________cyl:	 Number of cylinders"),
+    h4("disp:	 Displacement (cu.in.)________________ hp:	 Gross horsepower"),
+    h4("drat:	 Rear axle ratio  ____________________  wt:	 Weight (1000 lbs)"),
+    h4(" qsec:	 1/4 mile time ________________________ vs:	 V/S"),
+    h4("am:	 Transmission (0 = automatic, 1 = manual)"),
+    h4("gear:	 Number of forward gearscarb	 Number of carburetors"),
+    
+    selectInput('ycol', 'Car performance', names(mtcars[c(1,4)])),
+    selectInput('xcol', 'Car parameters I', names(mtcars[c(2,3,5:11)]),
+                selected=names(mtcars)[[3]]),
+    
+    selectInput('par2','Car parameters II',names(mtcars[c(2,9:11)]),
+    )
+  ),
+  
+  
+  mainPanel(
+    plotOutput('plot1')
+  )
+)
+)
