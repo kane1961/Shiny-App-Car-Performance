@@ -1,0 +1,30 @@
+library(shiny)
+# Define server logic required to draw a plot 
+server <- function(input, output, session) 
+{  # Combine the selected variables into a new data frame
+  
+  selectedData <- reactive( {
+    mtcars[, c(input$xcol, input$ycol)]
+  })
+  
+  par2 <- reactive({mtcars[,c(input$par2)]
+  })
+  
+  fit<-reactive({lm(mtcars[,c(input$ycol)]~mtcars[,c(input$xcol)] )
+  })
+  
+  output$plot1 <- renderPlot({
+    
+    palette(c("#E41A1C", "#377EB8", "#984EA3",
+              "#FF7F00", "#FFFF33", "#A65628", "#F781BF", "#999999"))
+    
+    
+    par(mar = c(5.1, 4.1, 0, 1))
+    plot(selectedData(), pch = 20, cex = 5, col=par2() )
+    legend("topright", pch=20, col=unique(par2()), legend = order( unique( par2())))
+    abline(fit(), lwd=2)
+    
+    
+  })
+  
+}
